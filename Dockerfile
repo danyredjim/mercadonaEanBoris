@@ -2,7 +2,7 @@ FROM eclipse-temurin:17-jdk-jammy
 
 WORKDIR /app
 
-COPY target/mercadonaEanBoris-0.0.1-SNAPSHOT app.jar
+COPY target/mercadonaEanBoris-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
