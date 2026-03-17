@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: mercadona-eanboris
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my-app
+      app: mercadona-eanboris
   template:
     metadata:
       labels:
-        app: my-app
+        app: mercadona-eanboris
     spec:
       containers:
-        - name: my-app
-          image: localhost:5000/my-app:13
+        - name: mercadona-eanboris
+          image: localhost:5000/mercadona-eanboris:5
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
