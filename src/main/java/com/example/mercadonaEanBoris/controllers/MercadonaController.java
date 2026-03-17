@@ -14,5 +14,4 @@ public class MercadonaController {
 
         return "Hi cracks";
     }
-
 }
