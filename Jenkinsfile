@@ -17,6 +17,7 @@ pipeline {
     }
 
     stages {
+
         stage('Clean Workspace') {
             steps {
                 deleteDir()
@@ -25,7 +26,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/danyredjim/mercadonaEanBoris.git'
+                git branch: 'main', url: 'https://github.com/danyredjim/mercadonaEanBoris.git'
             }
         }
 
@@ -72,14 +73,6 @@ pipeline {
             }
         }
 
-      //  stage("Quality Gate") {
-      //      steps {
-      //          timeout(time: 2, unit: 'MINUTES') {
-      //              waitForQualityGate abortPipeline: true
-      //          }
-      //      }
-      //  }
-
         stage('Deploy JAR to Artifactory') {
             steps {
                 sh """
@@ -102,6 +95,16 @@ pipeline {
             steps {
                 sh """
                 docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+                """
+            }
+        }
+
+        // 🔥 NUEVO STAGE (EL IMPORTANTE)
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh """
+                kubectl set image deployment/mercadona-eanboris \
+                mercadona-eanboris=${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
